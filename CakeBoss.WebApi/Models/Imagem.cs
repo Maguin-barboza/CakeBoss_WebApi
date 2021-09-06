@@ -5,6 +5,15 @@ namespace CakeBoss.WebApi.Models
 {
 	public class Imagem
 	{
+		public Imagem(int produtoId, string caminho, string descricao, int ordemVisualizacao)
+		{
+			this.ProdutoId = produtoId;
+			this.Caminho = caminho;
+			this.Descricao = descricao;
+			this.OrdemVisualizacao = ordemVisualizacao;
+
+		}
+
 		public int Id { get; set; }
 		public int ProdutoId { get; set; }
 		public Produto Produto { get; set; }

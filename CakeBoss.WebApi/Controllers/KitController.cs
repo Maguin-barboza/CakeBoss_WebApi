@@ -30,44 +30,47 @@ namespace CakeBoss.WebApi.Controllers
             return Ok(kits);
         }
 
-        [HttpGet("byId/{Id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult> GetById(int Id)
         {
             IQueryable<Kit> Query = _context.Tbl_Kits.AsQueryable();
-            Kit kit = await Query.FirstOrDefaultAsync(k => k.Id == Id);
+            Kit kit = await Query.Where(k => k.Id == Id)
+                                 .Include(k => k.ProdutosKit)
+                                 .ThenInclude(pk => pk.Produto)
+                                 .FirstOrDefaultAsync();
             
             return Ok(kit);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Kit kit)
+        public ActionResult Post(Kit kit)
         {
-            await _context.AddAsync(kit);
+            _context.Add(kit);
             
-            if(await _context.SaveChangesAsync() > 0)
+            if(_context.SaveChanges() > 0)
                 return Ok(kit);
             
             return BadRequest("Não foi possível incluir kit.");
         }
 
-        [HttpPut("byId/{Id}")]
+        [HttpPut("{Id}")]
         public async Task<ActionResult> Put(int Id, Kit kit)
         {
             IQueryable<Kit> Query = _context.Tbl_Kits.AsQueryable();
-            Kit kitAux = await Query.FirstOrDefaultAsync(p => p.Id == Id);
+            Kit kitAux = await Query.AsNoTracking().FirstOrDefaultAsync(p => p.Id == Id);
             
             if(kitAux is null)
                 return BadRequest("Não foi possível encontrar kit.");
             
             _context.Update(kit);
 
-            if(await _context.SaveChangesAsync() > 0)
+            if(_context.SaveChanges() > 0)
                 return Ok(kit);
             
-            return BadRequest("Não foi possível incluir kit.");
+            return BadRequest("Não foi possível alterar kit.");
         }
 
-        [HttpDelete("byId/{Id}")]
+        [HttpDelete("{Id}")]
         public async Task<ActionResult> Delete(int Id)
         {
             IQueryable<Kit> Query = _context.Tbl_Kits.AsQueryable();

@@ -30,18 +30,11 @@ namespace CakeBoss.WebApi.Migrations
                     Descricao = table.Column<string>(type: "varchar(60)", nullable: false),
                     Preco = table.Column<decimal>(type: "decimal(8,2)", nullable: false, defaultValue: 0m),
                     Observacao = table.Column<string>(type: "varchar(MAX)", nullable: true),
-                    Quantidade = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    KitId = table.Column<int>(type: "int", nullable: true)
+                    Multiplicador = table.Column<decimal>(type: "decimal(8,2)", nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tbl_Produtos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tbl_Produtos_Tbl_Kits_KitId",
-                        column: x => x.KitId,
-                        principalTable: "Tbl_Kits",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,15 +59,40 @@ namespace CakeBoss.WebApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tbl_Produtos_Kit",
+                columns: table => new
+                {
+                    KitId = table.Column<int>(type: "int", nullable: false),
+                    ProdutoId = table.Column<int>(type: "int", nullable: false),
+                    Quantidade = table.Column<decimal>(type: "decimal(8,2)", nullable: false, defaultValue: 0m)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tbl_Produtos_Kit", x => new { x.KitId, x.ProdutoId });
+                    table.ForeignKey(
+                        name: "FK_Tbl_Produtos_Kit_Tbl_Kits_KitId",
+                        column: x => x.KitId,
+                        principalTable: "Tbl_Kits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tbl_Produtos_Kit_Tbl_Produtos_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Tbl_Produtos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Tbl_Imagens_ProdutoId",
                 table: "Tbl_Imagens",
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tbl_Produtos_KitId",
-                table: "Tbl_Produtos",
-                column: "KitId");
+                name: "IX_Tbl_Produtos_Kit_ProdutoId",
+                table: "Tbl_Produtos_Kit",
+                column: "ProdutoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -83,10 +101,13 @@ namespace CakeBoss.WebApi.Migrations
                 name: "Tbl_Imagens");
 
             migrationBuilder.DropTable(
-                name: "Tbl_Produtos");
+                name: "Tbl_Produtos_Kit");
 
             migrationBuilder.DropTable(
                 name: "Tbl_Kits");
+
+            migrationBuilder.DropTable(
+                name: "Tbl_Produtos");
         }
     }
 }

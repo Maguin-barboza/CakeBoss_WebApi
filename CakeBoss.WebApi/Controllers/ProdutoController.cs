@@ -30,22 +30,15 @@ namespace CakeBoss.WebApi.Controllers
             return Ok(Produtos);
         }
 
-        [HttpGet("byId/{Id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult> GetById(int Id)
         {
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
-            Produto Produto = await Query.FirstOrDefaultAsync(p => p.Id == Id);
+            Produto Produto = await Query.Where(p => p.Id == Id)
+                                         .Include(p => p.Imgens)
+                                         .FirstOrDefaultAsync();
             
             return Ok(Produto);
-        }
-
-        [HttpGet("byKitId/{kitId}")]
-        public async Task<ActionResult> GetByKitId(int kitId)
-        {
-            IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
-            List<Produto> Produtos = await Query.Where(p => p.KitId == kitId).ToListAsync();
-            
-            return Ok(Produtos);
         }
 
         [HttpPost]
@@ -59,11 +52,11 @@ namespace CakeBoss.WebApi.Controllers
             return BadRequest("Não foi possível incluir produto.");
         }
 
-        [HttpPut("byId/{Id}")]
+        [HttpPut("{Id}")]
         public async Task<ActionResult> Put(int Id, Produto produto)
         {
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
-            Produto produtoAux = await Query.FirstOrDefaultAsync(p => p.Id == Id);
+            Produto produtoAux = await Query.AsNoTracking().FirstOrDefaultAsync(p => p.Id == Id);
             
             if(produtoAux is null)
                 return BadRequest("Não foi possível encontrar produto.");
@@ -76,7 +69,7 @@ namespace CakeBoss.WebApi.Controllers
             return BadRequest("Não foi possível incluir produto.");
         }
 
-        [HttpDelete("byId/{Id}")]
+        [HttpDelete("{Id}")]
         public async Task<ActionResult> Delete(int Id)
         {
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();

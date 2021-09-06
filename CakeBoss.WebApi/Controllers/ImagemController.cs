@@ -59,7 +59,7 @@ namespace CakeBoss.WebApi.Controllers
             return BadRequest("Não foi possível incluir a imagem.");
         }
 
-        [HttpPut("byId/{Id}")]
+        [HttpPut("{Id}")]
         public async Task<ActionResult> Put(int Id, Imagem imagem)
         {
             IQueryable<Imagem> Query = _context.Tbl_Imagens.AsQueryable();
@@ -76,7 +76,7 @@ namespace CakeBoss.WebApi.Controllers
             return BadRequest("Não foi possível incluir a imagem.");
         }
 
-        [HttpDelete("byId/{Id}")]
+        [HttpDelete("{Id}")]
         public async Task<ActionResult> Delete(int Id)
         {
             IQueryable<Imagem> Query = _context.Tbl_Imagens.AsQueryable();
