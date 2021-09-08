@@ -2,10 +2,10 @@ INSERT INTO Tbl_Produtos(Descricao, Preco, Observacao, Multiplicador) VALUES
 ('Bolo de pote sabor brigadeiro', 8.5, 'Bolo de brigadeiro com cacau 100%', 1),
 ('Fatia de bolo sabor Ferrero Rocher', 7.00, 'Fatia de bolo sabor Ferrero Rocher', 1),
 ('Fatia de bolo sabor Ninho com geleia de morango', 7.00, 'Fatia de bolo sabor Ninho com geleia de morango', 1),
-('Tortinha de limão', 6.00, 'Tortinha de limão', 1),
+('Tortinha de limï¿½o', 6.00, 'Tortinha de limï¿½o', 1),
 ('Cento de salgados fritos tamanho Festa', 60, 'O Cento', 100),
-('Mini Naked', 50, 'Bolo mini naked de 10 fatias com direito a dois recheios. (Topper não incluso)', 1),
-('Bolo 16 fatias', 100, 'Bolo confeitado com direito a dois recheios. Serve 16 fatias. (Topper não incluso)', 1)
+('Mini Naked', 50, 'Bolo mini naked de 10 fatias com direito a dois recheios. (Topper nï¿½o incluso)', 1),
+('Bolo 16 fatias', 100, 'Bolo confeitado com direito a dois recheios. Serve 16 fatias. (Topper nï¿½o incluso)', 1)
 GO
 
 INSERT INTO Tbl_Imagens(ProdutoId, Caminho, Descricao, OrdemVisualizacao) VALUES
@@ -31,5 +31,10 @@ INSERT INTO Tbl_Kits(Descricao, Desconto) VALUES
 ('Mini Naked + Meio cento de salgado', 0.)
 GO
 
-INSERT INTO Tbl_Produtos_Kit(KitId, ProdutoId, Quantidade) VALUES
-(5, ),
+INSERT INTO Tbl_Produto_Kit(KitId, ProdutoId, Quantidade) VALUES
+(1, 5, 1), (1, 7, 1), (2, 5, 1), (2, 6, 1)
+GO
+
+SELECT * FROM Tbl_Kits
+SELECT * FROM Tbl_Produtos_Kit
+SELECT * FROM Tbl_Produtos
