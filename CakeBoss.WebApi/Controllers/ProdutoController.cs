@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 using CakeBoss.WebApi.Data;
 using CakeBoss.WebApi.Models;
+using CakeBoss.WebApi.DTOs;
 
 namespace CakeBoss.WebApi.Controllers
 {   
@@ -25,20 +27,20 @@ namespace CakeBoss.WebApi.Controllers
         public async Task<ActionResult> Get()
         {
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
-            List<Produto> Produtos = await Query.ToListAsync();
-
-            return Ok(Produtos);
+            List<Produto> produtos = await Query.ToListAsync();
+            
+            return Ok(produtos);
         }
 
         [HttpGet("{Id}")]
         public async Task<ActionResult> GetById(int Id)
         {
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
-            Produto Produto = await Query.Where(p => p.Id == Id)
+            Produto produto = await Query.Where(p => p.Id == Id)
                                          .Include(p => p.Imgens)
                                          .FirstOrDefaultAsync();
             
-            return Ok(Produto);
+            return Ok(produto);
         }
 
         [HttpPost]

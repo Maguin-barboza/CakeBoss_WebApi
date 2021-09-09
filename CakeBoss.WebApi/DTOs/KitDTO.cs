@@ -7,15 +7,8 @@ namespace CakeBoss.WebApi.DTOs
 	{
 		public int Id { get; set; }
 		public string Descricao { get; set; }
-        public double Desconto { get; set; }
-		public double Preco
-		{
-    		get
-			{
-                //double desconcoRateio = Desconto / ProdutosKitsDto.Sum(p => p.)
-                return 0;
-			}
-		}
+        //public double Desconto { get; set; }
+		
 
         public IEnumerable<ProdutosKitDTO> ProdutosKitsDto { get; set; }
 	}

@@ -8,6 +8,7 @@ namespace CakeBoss.WebApi.DTOs
         public string Descricao { get; set; }
         public double Preco { get; set; }
         public string Observacao { get; set; }
-        public IEnumerable<ImagemDTO> Imagens { get; set; }
+
+        public IEnumerable<ImagemDTO> Imgens { get; set; }
     }
 }
