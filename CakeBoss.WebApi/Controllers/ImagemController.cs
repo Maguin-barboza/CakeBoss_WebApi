@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using AutoMapper;
 
 using CakeBoss.WebApi.Data;
 using CakeBoss.WebApi.Models;
 using CakeBoss.WebApi.DTOs;
+
 
 namespace CakeBoss.WebApi.Controllers
 {   
@@ -17,10 +18,12 @@ namespace CakeBoss.WebApi.Controllers
     public class ImagemController: ControllerBase
     {
 		private readonly CakeBossContext _context;
+		private readonly IMapper _mapper;
 
-		public ImagemController(CakeBossContext context)
+		public ImagemController(CakeBossContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,7 +32,7 @@ namespace CakeBoss.WebApi.Controllers
             IQueryable<Imagem> Query = _context.Tbl_Imagens.AsQueryable();
             List<Imagem> imagens = await Query.ToListAsync();
 
-            return Ok(imagens);
+            return Ok(_mapper.Map<List<ImagemDTO>>(imagens));
         }
 
         [HttpGet("byId/{Id}")]
@@ -38,7 +41,7 @@ namespace CakeBoss.WebApi.Controllers
             IQueryable<Imagem> Query = _context.Tbl_Imagens.AsQueryable();
             Imagem imagem = await Query.FirstOrDefaultAsync(i => i.Id == Id);
             
-            return Ok(imagem);
+            return Ok(_mapper.Map<Imagem>(imagem));
         }
 
         [HttpGet("byProdutoId/{produtoId}")]
@@ -47,7 +50,7 @@ namespace CakeBoss.WebApi.Controllers
             IQueryable<Imagem> Query = _context.Tbl_Imagens.AsQueryable();
             List<Imagem> imagens = await Query.Where(i => i.ProdutoId == produtoId).ToListAsync();
             
-            return Ok(imagens);
+            return Ok(_mapper.Map<List<ImagemDTO>>(imagens));
         }
 
         [HttpPost]

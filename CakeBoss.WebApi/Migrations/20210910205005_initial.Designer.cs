@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CakeBoss.WebApi.Migrations
 {
     [DbContext(typeof(CakeBossContext))]
-    [Migration("20210906173454_initial")]
+    [Migration("20210910205005_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,9 @@ namespace CakeBoss.WebApi.Migrations
                     b.Property<string>("Observacao")
                         .HasColumnType("varchar(MAX)");
 
+                    b.Property<double>("ValorTotal")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Tbl_Kits");
@@ -92,6 +95,9 @@ namespace CakeBoss.WebApi.Migrations
 
                     b.Property<string>("Observacao")
                         .HasColumnType("varchar(MAX)");
+
+                    b.Property<double>("PrUnit")
+                        .HasColumnType("float");
 
                     b.Property<decimal>("Preco")
                         .ValueGeneratedOnAdd()

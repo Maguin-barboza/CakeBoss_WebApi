@@ -22,6 +22,7 @@ namespace CakeBoss.WebApi.Models
 		public double Desconto { get; set; }
 		[Column(TypeName = "varchar(MAX)")]
 		public string Observacao { get; set; }
+		public double ValorTotal { get; set; }
 
 		public IEnumerable<ProdutoKit> ProdutosKit { get; set; }
 	}

@@ -67,6 +67,9 @@ namespace CakeBoss.WebApi.Migrations
                     b.Property<string>("Observacao")
                         .HasColumnType("varchar(MAX)");
 
+                    b.Property<double>("ValorTotal")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Tbl_Kits");
@@ -90,6 +93,9 @@ namespace CakeBoss.WebApi.Migrations
 
                     b.Property<string>("Observacao")
                         .HasColumnType("varchar(MAX)");
+
+                    b.Property<double>("PrUnit")
+                        .HasColumnType("float");
 
                     b.Property<decimal>("Preco")
                         .ValueGeneratedOnAdd()

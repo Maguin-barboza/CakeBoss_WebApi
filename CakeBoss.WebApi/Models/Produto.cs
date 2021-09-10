@@ -20,11 +20,11 @@ namespace CakeBoss.WebApi.Models
 		public string Descricao { get; set; }
 		[Column(TypeName = "decimal(8, 2)")]
 		public double Preco { get; set; }
+		public double PrUnit { get; set; }
 		[Column(TypeName = "varchar(MAX)")]
 		public string Observacao { get; set; }
 		[Column(TypeName = "decimal(8, 2)")]
 		public double Multiplicador { get; set; }
-
 		public IEnumerable<ProdutoKit> ProdutosKit { get; set; }
 		public IEnumerable<Imagem> Imgens { get; set; }
 	}

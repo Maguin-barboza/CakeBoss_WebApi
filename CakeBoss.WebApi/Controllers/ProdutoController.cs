@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using AutoMapper;
 
 using CakeBoss.WebApi.Data;
 using CakeBoss.WebApi.Models;
 using CakeBoss.WebApi.DTOs;
+
 
 namespace CakeBoss.WebApi.Controllers
 {   
@@ -17,10 +18,12 @@ namespace CakeBoss.WebApi.Controllers
     public class ProdutoController: ControllerBase
     {
 		private readonly CakeBossContext _context;
+		private readonly IMapper _mapper;
 
-		public ProdutoController(CakeBossContext context)
+		public ProdutoController(CakeBossContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,7 +32,7 @@ namespace CakeBoss.WebApi.Controllers
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
             List<Produto> produtos = await Query.ToListAsync();
             
-            return Ok(produtos);
+            return Ok(_mapper.Map<List<ProdutoDTO>>(produtos));
         }
 
         [HttpGet("{Id}")]
@@ -40,7 +43,7 @@ namespace CakeBoss.WebApi.Controllers
                                          .Include(p => p.Imgens)
                                          .FirstOrDefaultAsync();
             
-            return Ok(produto);
+            return Ok(_mapper.Map<ProdutoDTO>(produto));
         }
 
         [HttpPost]

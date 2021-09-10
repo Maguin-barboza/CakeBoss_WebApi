@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using AutoMapper;
 
 using CakeBoss.WebApi.Data;
 using CakeBoss.WebApi.Models;
 using CakeBoss.WebApi.DTOs;
+
 
 namespace CakeBoss.WebApi.Controllers
 {   
@@ -17,10 +18,12 @@ namespace CakeBoss.WebApi.Controllers
     public class KitController: ControllerBase
     {
 		private readonly CakeBossContext _context;
+		private readonly IMapper _mapper;
 
-		public KitController(CakeBossContext context)
+		public KitController(CakeBossContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
             
         }
 
@@ -30,7 +33,7 @@ namespace CakeBoss.WebApi.Controllers
             IQueryable<Kit> Query = _context.Tbl_Kits.AsQueryable();
             List<Kit> kits = await Query.ToListAsync();
 
-            return Ok(kits);
+            return Ok(_mapper.Map<List<KitDTO>>(kits));
         }
 
         [HttpGet("{Id}")]
@@ -43,7 +46,7 @@ namespace CakeBoss.WebApi.Controllers
                                  .ThenInclude(p => p.Imgens)
                                  .FirstOrDefaultAsync();
             
-            return Ok(kit);
+            return Ok(_mapper.Map<KitDTO>(kit));
         }
 
         [HttpPost]

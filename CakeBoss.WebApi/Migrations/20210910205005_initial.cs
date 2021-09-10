@@ -14,7 +14,8 @@ namespace CakeBoss.WebApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descricao = table.Column<string>(type: "varchar(60)", nullable: false),
                     Desconto = table.Column<decimal>(type: "decimal(8,2)", nullable: false, defaultValue: 0m),
-                    Observacao = table.Column<string>(type: "varchar(MAX)", nullable: true)
+                    Observacao = table.Column<string>(type: "varchar(MAX)", nullable: true),
+                    ValorTotal = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,6 +30,7 @@ namespace CakeBoss.WebApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descricao = table.Column<string>(type: "varchar(60)", nullable: false),
                     Preco = table.Column<decimal>(type: "decimal(8,2)", nullable: false, defaultValue: 0m),
+                    PrUnit = table.Column<double>(type: "float", nullable: false),
                     Observacao = table.Column<string>(type: "varchar(MAX)", nullable: true),
                     Multiplicador = table.Column<decimal>(type: "decimal(8,2)", nullable: false, defaultValue: 0m)
                 },
