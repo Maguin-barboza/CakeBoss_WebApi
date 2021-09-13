@@ -9,7 +9,7 @@ using AutoMapper;
 using CakeBoss.WebApi.Data;
 using CakeBoss.WebApi.Models;
 using CakeBoss.WebApi.DTOs;
-
+using CakeBoss.WebApi.Helpers;
 
 namespace CakeBoss.WebApi.Controllers
 {   
@@ -27,11 +27,33 @@ namespace CakeBoss.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromQuery] PageConfig pageConfig)
         {
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
-            List<Produto> produtos = await Query.ToListAsync();
+
+            if(pageConfig.ByIdProduto is not null)
+                Query = Query.Where(p => p.Id == pageConfig.ByIdProduto);
             
+            if(pageConfig.byDescProd != string.Empty)
+                Query = Query.Where(p => p.Descricao.Contains(pageConfig.byDescProd));
+            
+            if(pageConfig.PrMin > 0 )
+                Query = Query.Where(p => p.Preco >= pageConfig.PrMin);
+            
+            if(pageConfig.PrMax > 0)
+                Query = Query.Where(p => p.Preco <= pageConfig.PrMax);
+            
+
+            if(pageConfig.OrderByIdProduto)
+                Query = Query.OrderBy(p => p.Id);
+            
+            if(pageConfig.OrderByDesc)
+                Query = Query.OrderBy(p => p.Descricao);
+            
+            if(pageConfig.OrderByPreco)
+                Query = Query.OrderBy(p => p.Preco);
+            
+            List<Produto> produtos = await Query.Pagination(Response, pageConfig);
             return Ok(_mapper.Map<List<ProdutoDTO>>(produtos));
         }
 
