@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CakeBoss.WebApi.Migrations
 {
     [DbContext(typeof(CakeBossContext))]
-    [Migration("20210910205005_initial")]
+    [Migration("20211008140023_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -13,5 +13,6 @@ namespace CakeBoss.WebApi.DTOs
         
 
         public IEnumerable<ImagemDTO> Imgens { get; set; }
+        public IEnumerable<ProdutoKitDTO> ProdutosKits { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace CakeBoss.WebApi.Controllers
             Kit kit = await Query.Where(k => k.Id == Id)
                                  .Include(k => k.ProdutosKit)
                                  .ThenInclude(pk => pk.Produto)
-                                 .ThenInclude(p => p.Imgens)
+                                 .ThenInclude(p => p.Imagens)
                                  .FirstOrDefaultAsync();
             
             return Ok(_mapper.Map<KitDTO>(kit));

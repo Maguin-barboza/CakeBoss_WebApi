@@ -62,7 +62,7 @@ namespace CakeBoss.WebApi.Controllers
         {
             IQueryable<Produto> Query = _context.Tbl_Produtos.AsQueryable();
             Produto produto = await Query.Where(p => p.Id == Id)
-                                         .Include(p => p.Imgens)
+                                         .Include(p => p.Imagens)
                                          .FirstOrDefaultAsync();
             
             return Ok(_mapper.Map<ProdutoDTO>(produto));

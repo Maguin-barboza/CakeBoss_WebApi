@@ -26,6 +26,6 @@ namespace CakeBoss.WebApi.Models
 		[Column(TypeName = "decimal(8, 2)")]
 		public double Multiplicador { get; set; }
 		public IEnumerable<ProdutoKit> ProdutosKit { get; set; }
-		public IEnumerable<Imagem> Imgens { get; set; }
+		public IEnumerable<Imagem> Imagens { get; set; }
 	}
 }
